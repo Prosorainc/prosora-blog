@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prosora — Free Wealth Book Summaries</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Books — Prosora</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,31 +11,20 @@
 <header>
   <a class="logo" href="index.html"><span class="ic">📖</span>Prosora</a>
   <nav>
-    <a class="home active" href="index.html">Home</a>
-    <a class="muted" href="books.html">Books</a>
+    <a class="muted" href="index.html">Home</a>
+    <a class="active" href="books.html">Books</a>
     <a class="muted" href="about.html">About</a>
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-text">
-    <h1>The Prosora Wealth Library</h1>
-    <p>Browse free, deep summaries of the world's best wealth &amp; self-improvement books. Read the key lessons anywhere, anytime.</p>
-    <div class="search">
-      <input type="text" placeholder="Search by book title, author name ...." aria-label="search">
-      <button aria-label="search">🔍</button>
-    </div>
+<section class="section" style="padding-top:2.5rem">
+  <h2>All Book Summaries</h2>
+  <p class="lead">Search our library, then preview or download the free PDF.</p>
+  <div class="search" style="max-width:520px;margin-bottom:2rem">
+    <input id="q" type="text" placeholder="Search by title or author ...." aria-label="search">
+    <button onclick="doSearch()" aria-label="search">🔍</button>
   </div>
-  <div class="hero-art">
-    <span class="blob"></span><span class="tri"></span>
-    <span class="book-stack">📚</span>
-  </div>
-</section>
-
-<section class="section">
-  <h2>Free Book Summaries</h2>
-  <p class="lead">Original deep-dive PDFs — no fluff, just the real meaning. Click to download.</p>
-  <div class="grid">
+  <div class="grid" id="grid">
 <!-- BOOKS_START -->
     <div class="book-card">
       <div class="book-icon">📘</div>
@@ -71,6 +59,42 @@
 <!-- BOOKS_END -->
   </div>
 </section>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="m-title">Preview</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <iframe id="m-frame" src=""></iframe>
+  </div>
+</div>
+
+<script>
+function books(){
+  return Array.from(document.querySelectorAll('#grid .book-card')).map(c=>({
+    el:c,
+    title:c.querySelector('h3').textContent.toLowerCase(),
+    author:c.querySelector('.author').textContent.toLowerCase()
+  }));
+}
+function doSearch(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  books().forEach(b=>{
+    const hit=!q || b.title.includes(q) || b.author.includes(q);
+    b.el.style.display=hit?'flex':'none';
+  });
+}
+document.getElementById('q').addEventListener('input',doSearch);
+function preview(pdf){
+  document.getElementById('m-frame').src=pdf+'#toolbar=1&view=FitH';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('m-frame').src='';
+}
+</script>
 
 <footer>Prosora — wealth &amp; self-improvement. Turn knowledge into wealth. Summaries are original paraphrases for educational use.</footer>
 </body>

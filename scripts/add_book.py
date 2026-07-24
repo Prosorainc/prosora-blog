@@ -22,22 +22,31 @@ def main():
     pdf = BASE / "pdf" / f"{title.replace(' ', '_')}.pdf"
     if not pdf.exists():
         print("PDF gen failed"); sys.exit(1)
-    # 2. inject card
-    html = SITE.read_text()
+    # 2. inject card into index.html and books.html
+    fn = title.replace(" ", "_")
     card = (f'    <div class="book-card">\n'
             f'      <div class="book-icon">📘</div>\n'
             f'      <h3>{title}</h3>\n'
             f'      <div class="author">by {author}</div>\n'
             f'      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>\n'
-            f'      <a class="dl-btn" href="pdf/{title.replace(" ", "_")}.pdf">Download PDF</a>\n'
+            f'      <div class="btn-row">\n'
+            f'        <button class="btn" onclick="preview(\'pdf/{fn}.pdf\')">Preview</button>\n'
+            f'        <a class="btn ghost" href="pdf/{fn}.pdf" download>Download</a>\n'
+            f'      </div>\n'
             f'    </div>\n')
     marker = "<!-- BOOKS_END -->"
-    if marker in html:
-        html = html.replace(marker, card + "  " + marker, 1)
-        SITE.write_text(html)
-        print(f"[site] added card for {title}")
+    changed = False
+    for page in ("index.html", "books.html"):
+        p = BASE / "site" / page
+        html = p.read_text()
+        if marker in html and card.strip() not in html:
+            html = html.replace(marker, card + "  " + marker, 1)
+            p.write_text(html)
+            changed = True
+    if changed:
+        print(f"[site] added card to index + books")
     else:
-        print("[site] marker not found, skip inject")
+        print("[site] card already present, skip")
     print(f"[done] {title} ready at pdf/{title.replace(' ', '_')}.pdf")
 
 
