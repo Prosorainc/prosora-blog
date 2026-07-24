@@ -22,10 +22,6 @@
   <div class="hero-text">
     <h1>The Prosora Wealth Library</h1>
     <p>Browse free, deep summaries of the world's best wealth &amp; self-improvement books. Read the key lessons anywhere, anytime.</p>
-    <div class="search">
-      <input type="text" placeholder="Search by book title, author name ...." aria-label="search">
-      <button aria-label="search">🔍</button>
-    </div>
   </div>
   <div class="hero-art">
     <span class="blob"></span><span class="tri"></span>
@@ -35,105 +31,38 @@
 
 <section class="section">
   <h2>Free Book Summaries</h2>
-  <p class="lead">Original deep-dive PDFs — no fluff, just the real meaning. Click to download.</p>
-  <div class="grid">
-<!-- BOOKS_START -->
-    <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>Atomic Habits</h3>
-      <div class="author">by James Clear</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <a class="btn" href="pdf/Atomic_Habits.pdf" download>Download PDF</a>
-    </div>
-    <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The Psychology of Money</h3>
-      <div class="author">by Morgan Housel</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <a class="btn" href="pdf/The_Psychology_of_Money.pdf" download>Download PDF</a>
-    </div>
-    <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>Rich Dad Poor Dad</h3>
-      <div class="author">by Robert Kiyosaki</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <a class="btn" href="pdf/Rich_Dad_Poor_Dad.pdf" download>Download PDF</a>
-    </div>
-    <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The 4-Hour Workweek</h3>
-      <div class="author">by Timothy Ferriss</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_4-Hour_Workweek.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_4-Hour_Workweek.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The Simple Path to Wealth</h3>
-      <div class="author">by JL Collins</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_Simple_Path_to_Wealth.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_Simple_Path_to_Wealth.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The Psychology of Human Misjudgment</h3>
-      <div class="author">by Charlie Munger</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_Psychology_of_Human_Misjudgment.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_Psychology_of_Human_Misjudgment.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The E-Myth Revisited</h3>
-      <div class="author">by Michael Gerber</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_E-Myth_Revisited.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_E-Myth_Revisited.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The Total Money Makeover</h3>
-      <div class="author">by Dave Ramsey</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_Total_Money_Makeover.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_Total_Money_Makeover.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>Think and Grow Rich</h3>
-      <div class="author">by Napoleon Hill</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/Think_and_Grow_Rich.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/Think_and_Grow_Rich.pdf" download>Download</a>
-      </div>
-    </div>
-      <div class="book-card">
-      <div class="book-icon">📘</div>
-      <h3>The Millionaire Next Door</h3>
-      <div class="author">by Thomas J. Stanley</div>
-      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
-      <div class="btn-row">
-        <button class="btn" onclick="preview('pdf/The_Millionaire_Next_Door.pdf')">Preview</button>
-        <a class="btn ghost" href="pdf/The_Millionaire_Next_Door.pdf" download>Download</a>
-      </div>
-    </div>
-  <!-- BOOKS_END -->
+  <p class="intro">We've read the best wealth and self-improvement books so you don't have to — then distilled each one into a sharp, original summary of the key lessons that actually change how you think about money. No fluff, no recycled quotes: just the real meaning, the underlying principles, and a 30-day action plan you can start today. Every summary is free to read and free to download.</p>
+  <div class="grid" id="home-grid"></div>
+  <div style="text-align:center;margin-top:2rem">
+    <a class="btn" href="books.html" style="font-size:1rem;padding:.7rem 1.8rem">View all books →</a>
   </div>
 </section>
 
 <footer>Prosora — wealth &amp; self-improvement. Turn knowledge into wealth. Summaries are original paraphrases for educational use.<span style="display:none">r1784910711</span></footer>
+
+<script>
+const HOME_BOOKS = [
+<!-- BOOKS_DATA -->
+  {t:"Atomic Habits", a:"James Clear", f:"Atomic_Habits"},
+  {t:"Rich Dad Poor Dad", a:"Robert Kiyosaki", f:"Rich_Dad_Poor_Dad"},
+  {t:"The 4-Hour Workweek", a:"Timothy Ferriss", f:"The_4-Hour_Workweek"},
+  {t:"The E-Myth Revisited", a:"Michael Gerber", f:"The_E-Myth_Revisited"},
+  {t:"The Millionaire Next Door", a:"Thomas J. Stanley", f:"The_Millionaire_Next_Door"},
+  {t:"The Psychology of Human Misjudgment", a:"Charlie Munger", f:"The_Psychology_of_Human_Misjudgment"},
+  {t:"The Psychology of Money", a:"Morgan Housel", f:"The_Psychology_of_Money"},
+  {t:"The Simple Path to Wealth", a:"JL Collins", f:"The_Simple_Path_to_Wealth"},
+  {t:"The Total Money Makeover", a:"Dave Ramsey", f:"The_Total_Money_Makeover"},
+  {t:"Think and Grow Rich", a:"Napoleon Hill", f:"Think_and_Grow_Rich"},
+  <!-- /BOOKS_DATA -->
+];
+const hg = document.getElementById('home-grid');
+HOME_BOOKS.slice(0,6).forEach(b=>{
+  hg.insertAdjacentHTML('beforeend',
+    `<div class="book-card"><div class="book-icon">📘</div><h3>${b.t}</h3>`+
+    `<div class="author">by ${b.a}</div>`+
+    `<div class="desc">Free Prosora deep summary. Click to download the PDF.</div>`+
+    `<a class="btn" href="pdf/${b.f}.pdf" download>Download PDF</a></div>`);
+});
+</script>
 </body>
 </html>
-<!-- rebuild 1784909651 -->
