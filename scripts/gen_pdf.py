@@ -18,7 +18,7 @@ if not KEY:
     PK = Path("/home/ubuntu/prosora/gemini_key.txt")
     if PK.exists():
         KEY = PK.read_text().strip()
-MODEL = "gemini-flash-latest"  # active free tier for this key
+MODEL = "gemini-flash-lite-latest"  # active free tier, higher daily quota than 3.x-flash
 WIB = timezone(timedelta(hours=7))
 
 
