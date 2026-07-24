@@ -13,11 +13,12 @@ from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
 BASE = Path(__file__).resolve().parent.parent
-KEY = (BASE / "openrouter_key.txt").read_text().strip() if (BASE/"openrouter_key.txt").exists() else None
+KEY = (BASE / "gemini_key.txt").read_text().strip() if (BASE/"gemini_key.txt").exists() else None
 if not KEY:
-    PK = Path("/home/ubuntu/prosora/openrouter_key.txt")
+    PK = Path("/home/ubuntu/prosora/gemini_key.txt")
     if PK.exists():
         KEY = PK.read_text().strip()
+MODEL = "gemini-flash-latest"  # active free tier for this key
 WIB = timezone(timedelta(hours=7))
 
 
@@ -59,15 +60,24 @@ def _draft(title, author):
         "(1 punchy closing paragraph tying it to financial freedom)\n\n"
         "Write ORIGINAL analysis. Do not copy book sentences. Plain readable text."
     )
-    import requests
-    r = requests.post("https://openrouter.ai/api/v1/chat/completions",
-        headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"},
-        json={"model": "google/gemma-4-26b-a4b-it:free",
-              "messages": [
-                  {"role": "system", "content": "You write deep, original book summaries that reveal real meaning, not surface tips."},
-                  {"role": "user", "content": prompt}]},
-        timeout=180)
-    return r.json()["choices"][0]["message"]["content"].strip()
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=KEY)
+        m = genai.GenerativeModel(MODEL)
+        resp = m.generate_content(
+            [ {"role": "user",
+               "parts": ["You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt]} ],
+            generation_config={"temperature": 0.7, "max_output_tokens": 8192})
+        return resp.text.strip()
+    except ImportError:
+        # fallback: raw REST if SDK missing
+        import requests
+        r = requests.post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={KEY}",
+            json={"contents":[{"parts":[{"text": prompt}]}],"generationConfig":{"temperature":0.7,"maxOutputTokens":8192}},
+            timeout=180)
+        r.raise_for_status()
+        return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
 
 
 def _render(title, author, body):
