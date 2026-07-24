@@ -3,36 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prosora Book Summaries — Free Wealth PDFs</title>
-<style>
-  body{font-family:system-ui,Arial,sans-serif;max-width:760px;margin:0 auto;padding:2rem;background:#0d0d0d;color:#eee}
-  h1{color:#D4AF37;text-align:center}
-  .sub{text-align:center;color:#aaa;margin-bottom:2rem}
-  .card{background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:1.2rem;margin:1rem 0}
-  .card a{color:#D4AF37;text-decoration:none;font-weight:bold}
-  .card p{color:#bbb;font-size:.9rem}
-  footer{text-align:center;color:#666;margin-top:3rem;font-size:.8rem}
-</style>
+<title>Prosora — Free Wealth Book Summaries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>📚 Prosora Free Book Summaries</h1>
-<div class="sub">Wealth &amp; self-improvement — distilled into free PDFs.<br>Turn knowledge into wealth, one page at a time.</div>
+<header>
+  <a class="logo" href="index.html"><span class="ic">📖</span>Prosora</a>
+  <nav>
+    <a class="home active" href="index.html">Home</a>
+    <a class="muted" href="books.html">Books</a>
+    <a class="muted" href="about.html">About</a>
+  </nav>
+</header>
 
+<section class="hero">
+  <div class="hero-text">
+    <h1>The Prosora Wealth Library</h1>
+    <p>Browse free, deep summaries of the world's best wealth &amp; self-improvement books. Read the key lessons anywhere, anytime.</p>
+    <div class="search">
+      <input type="text" placeholder="Search by book title, author name ...." aria-label="search">
+      <button aria-label="search">🔍</button>
+    </div>
+  </div>
+  <div class="hero-art">
+    <span class="blob"></span><span class="tri"></span>
+    <span class="book-stack">📚</span>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Free Book Summaries</h2>
+  <p class="lead">Original deep-dive PDFs — no fluff, just the real meaning. Click to download.</p>
+  <div class="grid">
 <!-- BOOKS_START -->
-<div class="card">
-  <a href="pdf/Atomic_Habits.pdf">📘 Atomic Habits — James Clear</a>
-  <p>Systems beat goals. 1% daily gains compound into explosive wealth.</p>
-</div>
-  <div class="card">
-    <a href="pdf/The_Psychology_of_Money.pdf">📘 The Psychology of Money — Morgan Housel</a>
-    <p>Free Prosora summary. Click to download.</p>
-  </div>
-  <div class="card">
-    <a href="pdf/Rich_Dad_Poor_Dad.pdf">📘 Rich Dad Poor Dad — Robert Kiyosaki</a>
-    <p>Free Prosora summary. Click to download.</p>
-  </div>
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>Atomic Habits</h3>
+      <div class="author">by James Clear</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="btn" href="pdf/Atomic_Habits.pdf" download>Download PDF</a>
+    </div>
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>The Psychology of Money</h3>
+      <div class="author">by Morgan Housel</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="btn" href="pdf/The_Psychology_of_Money.pdf" download>Download PDF</a>
+    </div>
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>Rich Dad Poor Dad</h3>
+      <div class="author">by Robert Kiyosaki</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="btn" href="pdf/Rich_Dad_Poor_Dad.pdf" download>Download PDF</a>
+    </div>
 <!-- BOOKS_END -->
+  </div>
+</section>
 
-<footer>Prosora — not affiliated with authors. Summaries are original paraphrases for educational use.</footer>
+<footer>Prosora — wealth &amp; self-improvement. Turn knowledge into wealth. Summaries are original paraphrases for educational use.</footer>
 </body>
 </html>
