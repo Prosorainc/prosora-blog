@@ -8,7 +8,6 @@ import sys, subprocess
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
-SITE = BASE / "site" / "index.html"
 VENV = BASE / ".venv" / "bin" / "activate"
 
 
@@ -37,7 +36,7 @@ def main():
     marker = "<!-- BOOKS_END -->"
     changed = False
     for page in ("index.html", "books.html"):
-        p = BASE / "site" / page
+        p = BASE / page
         html = p.read_text()
         if marker in html and card.strip() not in html:
             html = html.replace(marker, card + "  " + marker, 1)
