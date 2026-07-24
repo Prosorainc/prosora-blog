@@ -24,10 +24,13 @@ def main():
         print("PDF gen failed"); sys.exit(1)
     # 2. inject card
     html = SITE.read_text()
-    card = (f'  <div class="card">\n'
-            f'    <a href="pdf/{title.replace(" ", "_")}.pdf">📘 {title} — {author}</a>\n'
-            f'    <p>Free Prosora summary. Click to download.</p>\n'
-            f'  </div>\n')
+    card = (f'    <div class="book-card">\n'
+            f'      <div class="book-icon">📘</div>\n'
+            f'      <h3>{title}</h3>\n'
+            f'      <div class="author">by {author}</div>\n'
+            f'      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>\n'
+            f'      <a class="dl-btn" href="pdf/{title.replace(" ", "_")}.pdf">Download PDF</a>\n'
+            f'    </div>\n')
     marker = "<!-- BOOKS_END -->"
     if marker in html:
         html = html.replace(marker, card + "  " + marker, 1)

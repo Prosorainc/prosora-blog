@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prosora — Free Wealth Book Summaries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0d1b3e; --navy2:#1a2a5e; --cyan:#00bcd4; --cyan-d:#0097a7;
+    --grey:#6b7280; --line:#e8edf3; --bg:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,Arial,sans-serif;color:var(--navy);background:var(--bg);line-height:1.6}
+  /* Header */
+  header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:10}
+  .logo{display:flex;align-items:center;gap:.55rem;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy)}
+  .logo .ic{font-size:1.6rem}
+  nav{display:flex;align-items:center;gap:1.6rem}
+  nav a{text-decoration:none;font-weight:500;font-size:.95rem}
+  nav .home{color:var(--cyan-d)}
+  nav .muted{color:var(--grey)}
+  .login{background:var(--cyan);color:#fff;padding:.5rem 1.2rem;border-radius:8px;font-weight:600;font-size:.85rem;letter-spacing:.5px}
+  /* Hero */
+  .hero{display:flex;align-items:center;gap:3rem;padding:4rem 5%;flex-wrap:wrap}
+  .hero-text{flex:1;min-width:280px}
+  .hero h1{font-family:'Playfair Display',serif;font-size:2.8rem;line-height:1.15;color:var(--navy);margin-bottom:1rem}
+  .hero p{color:var(--grey);font-size:1.05rem;max-width:440px;margin-bottom:1.8rem}
+  .search{display:flex;max-width:440px}
+  .search input{flex:1;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;padding:.8rem 1rem;font-size:.95rem;outline:none;font-family:'Inter'}
+  .search button{background:var(--cyan);border:none;border-radius:0 10px 10px 0;padding:0 1.1rem;cursor:pointer;font-size:1.1rem}
+  .hero-art{flex:1;min-width:260px;text-align:center;position:relative}
+  .hero-art .blob{position:absolute;right:-20px;top:-10px;width:200px;height:200px;border-radius:50%;background:#fef6d8;z-index:-1}
+  .hero-art .tri{position:absolute;left:-30px;bottom:10px;width:0;height:0;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:100px solid #e3f4f7;z-index:-1}
+  .book-stack{font-size:7rem;display:inline-block;transform:rotate(-3deg)}
+  /* Books grid */
+  .section{padding:1rem 5% 4rem}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.9rem;margin-bottom:.3rem}
+  .section .lead{color:var(--grey);margin-bottom:2rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.6rem}
+  .book-card{border:1px solid var(--line);border-radius:14px;padding:1.6rem;transition:.2s;background:#fff}
+  .book-card:hover{box-shadow:0 8px 24px rgba(13,27,62,.08);transform:translateY(-3px)}
+  .book-icon{font-size:2.2rem;margin-bottom:.6rem}
+  .book-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--navy);margin-bottom:.2rem}
+  .book-card .author{color:var(--cyan-d);font-size:.85rem;font-weight:600;margin-bottom:.7rem}
+  .book-card .desc{color:var(--grey);font-size:.9rem;margin-bottom:1.1rem}
+  .dl-btn{display:inline-block;background:var(--cyan);color:#fff;text-decoration:none;padding:.55rem 1.1rem;border-radius:8px;font-weight:600;font-size:.85rem}
+  .dl-btn:hover{background:var(--cyan-d)}
+  footer{text-align:center;padding:2.5rem 5%;color:var(--grey);font-size:.8rem;border-top:1px solid var(--line);margin-top:2rem}
+  @media(max-width:640px){.hero h1{font-size:2.1rem}.nav-mid{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="ic">📖</span>Prosora</div>
+  <nav>
+    <a class="home" href="#">Home</a>
+    <a class="muted" href="#books">Books</a>
+    <a class="muted" href="#">About ▾</a>
+    <a class="login" href="#">LOGIN</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>The Prosora Wealth Library</h1>
+    <p>Browse free, deep summaries of the world's best wealth &amp; self-improvement books. Read the key lessons anywhere, anytime.</p>
+    <div class="search">
+      <input type="text" placeholder="Search by book title, author name ...." aria-label="search">
+      <button aria-label="search">🔍</button>
+    </div>
+  </div>
+  <div class="hero-art">
+    <span class="blob"></span><span class="tri"></span>
+    <span class="book-stack">📚</span>
+  </div>
+</section>
+
+<section class="section" id="books">
+  <h2>Free Book Summaries</h2>
+  <p class="lead">Original deep-dive PDFs — no fluff, just the real meaning. Click to download.</p>
+  <div class="grid">
+<!-- BOOKS_START -->
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>Atomic Habits</h3>
+      <div class="author">by James Clear</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="dl-btn" href="pdf/Atomic_Habits.pdf">Download PDF</a>
+    </div>
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>The Psychology of Money</h3>
+      <div class="author">by Morgan Housel</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="dl-btn" href="pdf/The_Psychology_of_Money.pdf">Download PDF</a>
+    </div>
+    <div class="book-card">
+      <div class="book-icon">📘</div>
+      <h3>Rich Dad Poor Dad</h3>
+      <div class="author">by Robert Kiyosaki</div>
+      <div class="desc">Free Prosora deep summary. Click to download the PDF.</div>
+      <a class="dl-btn" href="pdf/Rich_Dad_Poor_Dad.pdf">Download PDF</a>
+    </div>
+<!-- BOOKS_END -->
+  </div>
+</section>
+
+<footer>Prosora — wealth &amp; self-improvement. Turn knowledge into wealth. Summaries are original paraphrases for educational use.</footer>
+
+</body>
+</html>
