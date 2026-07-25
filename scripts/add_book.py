@@ -38,6 +38,11 @@ def _author_for(title):
         "The_Total_Money_Makeover": "Dave Ramsey",
         "Think_and_Grow_Rich": "Napoleon Hill",
         "The_Millionaire_Next_Door": "Thomas J. Stanley",
+        "Your_Money_or_Your_Life": "Vicki Robin",
+        "The_Little_Book_of_Common_Sense_Investing": "John C. Bogle",
+        "The_Intelligent_Investor": "Benjamin Graham",
+        "The_Lean_Startup": "Eric Ries",
+        "Good_to_Great": "Jim Collins",
     }
     return m.get(title, "")
 
@@ -89,6 +94,11 @@ def _remembrance(title, author):
         "The_Total_Money_Makeover": "Dave Ramsey",
         "Think_and_Grow_Rich": "Napoleon Hill",
         "The_Millionaire_Next_Door": "Thomas J. Stanley",
+        "Your_Money_or_Your_Life": "Vicki Robin",
+        "The_Little_Book_of_Common_Sense_Investing": "John C. Bogle",
+        "The_Intelligent_Investor": "Benjamin Graham",
+        "The_Lean_Startup": "Eric Ries",
+        "Good_to_Great": "Jim Collins",
     }
     fn = title.replace(" ", "_")
     if fn not in m:
