@@ -19,7 +19,7 @@ ADD = BASE / "scripts" / "add_book.py"
 
 # throttle: 12s between calls -> ~5 calls/min (under 15 RPM limit, gentle on CPU)
 CALL_DELAY = 12
-DEFAULT_MAX = 5
+DEFAULT_MAX = 20
 
 
 def main():
