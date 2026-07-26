@@ -17,6 +17,12 @@ QUEUE = BASE / "books_queue.txt"
 GEN = BASE / "scripts" / "gen_pdf.py"
 ADD = BASE / "scripts" / "add_book.py"
 
+# Always spawn gen_pdf/add_book with THIS project's venv so reportlab and
+# google.generativeai resolve — even when the cron's `python3` points at a
+# different venv (e.g. /home/ubuntu/prosora/.venv, which lacks reportlab).
+VENV_PY = BASE / ".venv" / "bin" / "python"
+PY = str(VENV_PY) if VENV_PY.exists() else sys.executable
+
 # throttle: 12s between calls -> ~5 calls/min (under 15 RPM limit, gentle on CPU)
 CALL_DELAY = 12
 DEFAULT_MAX = 20
@@ -41,14 +47,14 @@ def main():
         title, author = [x.strip() for x in line.split("|", 1)]
         print(f"\n=== [{i+1}/{len(todo)}] {title} ===")
         try:
-            r = subprocess.run([sys.executable, str(GEN), title, author],
+            r = subprocess.run([PY, str(GEN), title, author],
                                capture_output=True, text=True, timeout=240)
             if r.returncode != 0 or not (BASE / "pdf" / f"{title.replace(' ', '_')}.pdf").exists():
                 print("[batch] gen FAILED, keep in queue:", r.stderr[-200:])
                 remaining.append(line)
                 continue
             # inject into site
-            subprocess.run([sys.executable, str(ADD), title, author],
+            subprocess.run([PY, str(ADD), title, author],
                            capture_output=True, text=True, timeout=60)
             done.append(line)
             print(f"[batch] OK: {title}")
