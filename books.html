@@ -40,7 +40,6 @@
 
 <script>
 const ALL_BOOKS = [
-<!-- BOOKS_DATA -->
   {t:"A Random Walk Down Wall Street", a:"Burton G. Malkiel", f:"A_Random_Walk_Down_Wall_Street"},
   {t:"Antifragile", a:"Nassim Nicholas Taleb", f:"Antifragile"},
   {t:"Atomic Habits", a:"James Clear", f:"Atomic_Habits"},
@@ -131,10 +130,17 @@ const PER = 9;
 let page = 1;
 
 function render(){
+  const q = document.getElementById('q').value.toLowerCase().trim();
+  const filtered = ALL_BOOKS.filter(b => {
+    if(!q) return true;
+    return (b.t+' '+b.a).toLowerCase().includes(q);
+  });
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
-  const start = (page-1)*PER;
-  ALL_BOOKS.slice(start, start+PER).forEach(b=>{
+  const pages = Math.ceil(filtered.length / PER);
+  const p = Math.min(page, pages||1);
+  const start = (p-1)*PER;
+  filtered.slice(start, start+PER).forEach(b=>{
     grid.insertAdjacentHTML('beforeend',
       `<div class="book-card"><div class="book-icon">📘</div><h3>${b.t}</h3>`+
       `<div class="author">by ${b.a}</div>`+
@@ -142,30 +148,18 @@ function render(){
       `<div class="btn-row"><button class="btn" onclick="preview('pdf/${b.f}.pdf')">Preview</button>`+
       `<a class="btn ghost" href="pdf/${b.f}.pdf" download>Download</a></div></div>`);
   });
-  // pager
-  const pages = Math.ceil(ALL_BOOKS.length / PER);
   const pager = document.getElementById('pager');
   let html = '';
   for(let i=1;i<=pages;i++){
-    html += `<a href="#" onclick="goto(${i});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;${i===page?'background:#00bcd4;color:#fff':'border:1px solid #00bcd4;color:#0097a7'}">${i}</a>`;
+    html += `<a href="#" onclick="goto(${i});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;${i===p?'background:#00bcd4;color:#fff':'border:1px solid #00bcd4;color:#0097a7'}">${i}</a>`;
   }
-  if(page < pages) html += `<a href="#" onclick="goto(${page+1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">Next →</a>`;
-  if(page > 1) html = `<a href="#" onclick="goto(${page-1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">← Prev</a>` + html;
+  if(p < pages) html += `<a href="#" onclick="goto(${p+1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">Next →</a>`;
+  if(p > 1) html = `<a href="#" onclick="goto(${p-1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">← Prev</a>` + html;
   pager.innerHTML = html;
-  // re-apply search filter if active
-  const q = document.getElementById('q').value.toLowerCase().trim();
-  if(q) doSearch();
 }
 function goto(p){ page = p; render(); window.scrollTo(0,0); }
 
-function doSearch(){
-  const q = document.getElementById('q').value.toLowerCase().trim();
-  document.querySelectorAll('#grid .book-card').forEach(c=>{
-    const t = c.querySelector('h3').textContent.toLowerCase();
-    const a = c.querySelector('.author').textContent.toLowerCase();
-    c.style.display = (!q || t.includes(q) || a.includes(q)) ? 'flex' : 'none';
-  });
-}
+function doSearch(){ render(); }
 
 function preview(pdf){
   document.getElementById('m-frame').src = pdf + '#toolbar=1&view=FitH';
