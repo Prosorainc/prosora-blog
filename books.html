@@ -225,7 +225,7 @@ const ALL_BOOKS = [
   {t:"Zero to One", a:"Peter Thiel", f:"Zero_to_One"},
   <!-- /BOOKS_DATA -->
 ];
-const PER = 9;
+const PER = 10;
 let page = 1;
 
 function render(){
@@ -248,12 +248,27 @@ function render(){
       `<a class="btn ghost" href="pdf/${b.f}.pdf" download>Download</a></div></div>`);
   });
   const pager = document.getElementById('pager');
-  let html = '';
-  for(let i=1;i<=pages;i++){
-    html += `<a href="#" onclick="goto(${i});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;${i===p?'background:#00bcd4;color:#fff':'border:1px solid #00bcd4;color:#0097a7'}">${i}</a>`;
+  const W = 2; // window radius around current page
+  let nums = [];
+  if (pages <= 7) {
+    for (let i=1; i<=pages; i++) nums.push(i);
+  } else {
+    nums.push(1);
+    if (p - W > 2) nums.push('…');
+    for (let i=Math.max(2, p-W); i<=Math.min(pages-1, p+W); i++) nums.push(i);
+    if (p + W < pages-1) nums.push('…');
+    nums.push(pages);
   }
-  if(p < pages) html += `<a href="#" onclick="goto(${p+1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">Next →</a>`;
-  if(p > 1) html = `<a href="#" onclick="goto(${p-1});return false" style="margin:0 .3rem;padding:.4rem .8rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">← Prev</a>` + html;
+  let html = '';
+  if (p > 1) html += `<a href="#" onclick="goto(${p-1});return false" style="margin:0 .3rem;padding:.4rem .9rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">← Prev</a>`;
+  nums.forEach(n => {
+    if (n === '…') {
+      html += `<span style="margin:0 .3rem;color:#789">…</span>`;
+    } else {
+      html += `<a href="#" onclick="goto(${n});return false" style="margin:0 .3rem;padding:.4rem .9rem;border-radius:8px;text-decoration:none;${n===p?'background:#00bcd4;color:#fff':'border:1px solid #00bcd4;color:#0097a7'}">${n}</a>`;
+    }
+  });
+  if (p < pages) html += `<a href="#" onclick="goto(${p+1});return false" style="margin:0 .3rem;padding:.4rem .9rem;border-radius:8px;text-decoration:none;border:1px solid #00bcd4;color:#0097a7">Next →</a>`;
   pager.innerHTML = html;
 }
 function goto(p){ page = p; render(); window.scrollTo(0,0); }
