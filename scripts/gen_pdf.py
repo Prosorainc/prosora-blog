@@ -87,7 +87,8 @@ def _render(title, author, body):
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
     from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
                                     HRFlowable, ListFlowable, ListItem)
-    out = BASE / "pdf" / f"{title.replace(' ', '_')}.pdf"
+    safe = title.replace(" ", "_").replace("/", "_").replace("\\", "_")
+    out = BASE / "pdf" / f"{safe}.pdf"
     doc = SimpleDocTemplate(str(out), pagesize=A4,
                             topMargin=2*cm, bottomMargin=2*cm,
                             leftMargin=2*cm, rightMargin=2*cm,
@@ -137,10 +138,11 @@ def main():
     if len(sys.argv) < 3:
         print("Usage: gen_pdf.py <title> <author>"); sys.exit(1)
     title, author = sys.argv[1], sys.argv[2]
+    safe = title.replace(" ", "_").replace("/", "_").replace("\\", "_")
     print(f"[gen] drafting '{title}' (deep)...")
     body = _draft(title, author)
     out = _render(title, author, body)
-    (BASE / "content" / f"{title.replace(' ', '_')}.md").write_text(
+    (BASE / "content" / f"{safe}.md").write_text(
         f"# {title} — {author}\n\n{body}\n")
     print(f"[gen] PDF ready: {out} ({out.stat().st_size} bytes)")
 

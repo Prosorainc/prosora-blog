@@ -49,7 +49,8 @@ def main():
         try:
             r = subprocess.run([PY, str(GEN), title, author],
                                capture_output=True, text=True, timeout=240)
-            if r.returncode != 0 or not (BASE / "pdf" / f"{title.replace(' ', '_')}.pdf").exists():
+            pdf_name = title.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            if r.returncode != 0 or not (BASE / "pdf" / f"{pdf_name}.pdf").exists():
                 print("[batch] gen FAILED, keep in queue:", r.stderr[-200:])
                 remaining.append(line)
                 continue
