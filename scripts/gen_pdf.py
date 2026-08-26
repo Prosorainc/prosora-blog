@@ -18,7 +18,7 @@ if not KEY:
     PK = Path("/home/ubuntu/prosora/gemini_key.txt")
     if PK.exists():
         KEY = PK.read_text().strip()
-MODEL = "gemini-flash-lite-latest"  # active free tier, higher daily quota than 3.x-flash
+MODEL = "gemini-3.6-flash"  # active free tier; 2.5-flash removed for new users, flash-lite deprecated pkg
 WIB = timezone(timedelta(hours=7))
 
 
@@ -61,13 +61,12 @@ def _draft(title, author):
         "Write ORIGINAL analysis. Do not copy book sentences. Plain readable text."
     )
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=KEY)
-        m = genai.GenerativeModel(MODEL)
-        resp = m.generate_content(
-            [ {"role": "user",
-               "parts": ["You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt]} ],
-            generation_config={"temperature": 0.7, "max_output_tokens": 8192})
+        from google import genai
+        client = genai.Client(api_key=KEY)
+        resp = client.models.generate_content(
+            model=MODEL,
+            contents="You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt,
+            config={"temperature": 0.7, "max_output_tokens": 8192})
         return resp.text.strip()
     except ImportError:
         # fallback: raw REST if SDK missing
