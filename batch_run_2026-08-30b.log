@@ -1,0 +1,65 @@
+[batch] processing 20 books (max=20)
+
+=== [1/20] Chip War ===
+[batch] OK: Chip War
+
+=== [2/20] Co-Intelligence ===
+[batch] OK: Co-Intelligence
+
+=== [3/20] The Worlds I See ===
+[batch] OK: The Worlds I See
+
+=== [4/20] Power and Progress ===
+[batch] OK: Power and Progress
+
+=== [5/20] Abundance ===
+[batch] OK: Abundance
+
+=== [6/20] How to Know a Person ===
+[batch] OK: How to Know a Person
+
+=== [7/20] Elon Musk ===
+[batch] OK: Elon Musk
+
+=== [8/20] The Age of AI ===
+[batch] OK: The Age of AI
+
+=== [9/20] Genesis ===
+[batch] OK: Genesis
+
+=== [10/20] Supremacy ===
+[batch] OK: Supremacy
+
+=== [11/20] The Man Who Solved the Market ===
+[batch] OK: The Man Who Solved the Market
+
+=== [12/20] Number Go Up ===
+[batch] OK: Number Go Up
+
+=== [13/20] Easy Money ===
+[batch] OK: Easy Money
+
+=== [14/20] The Big Fail ===
+[batch] OK: The Big Fail
+
+=== [15/20] Invent and Wander ===
+[batch] OK: Invent and Wander
+
+=== [16/20] Homo Deus ===
+[batch] OK: Homo Deus
+
+=== [17/20] 21 Lessons for the 21st Century ===
+[batch] OK: 21 Lessons for the 21st Century
+
+=== [18/20] Dopamine Nation ===
+[batch] OK: Dopamine Nation
+
+=== [19/20] The Status Game ===
+[batch] OK: The Status Game
+
+=== [20/20] Poverty, by America ===
+[batch] OK: Poverty, by America
+
+[batch] queue drained
+[batch] done: 20 generated
+BATCH_EXIT=0

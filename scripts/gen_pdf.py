@@ -60,23 +60,55 @@ def _draft(title, author):
         "(1 punchy closing paragraph tying it to financial freedom)\n\n"
         "Write ORIGINAL analysis. Do not copy book sentences. Plain readable text."
     )
+    # Multi-model fallback: jika model dicabut (404), coba model berikutnya
+    MODELS = ["gemini-3.6-flash", "gemini-flash-lite-latest",
+              "gemini-2.0-flash", "gemini-1.5-flash"]
+    import sys
+    print(f"[DEBUG gen_pdf] MODELS={MODELS}", file=sys.stderr, flush=True)
+    last_err = None
     try:
         from google import genai
         client = genai.Client(api_key=KEY)
-        resp = client.models.generate_content(
-            model=MODEL,
-            contents="You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt,
-            config={"temperature": 0.7, "max_output_tokens": 8192})
-        return resp.text.strip()
+        for m in MODELS:
+            try:
+                resp = client.models.generate_content(
+                    model=m,
+                    contents="You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt,
+                    config={"temperature": 0.7, "max_output_tokens": 8192})
+                return resp.text.strip()
+            except Exception as e:
+                last_err = e
+                s = str(e)
+                # fall back on model-removed (404) AND quota exhaustion (429),
+                # so a daily-quota-exhausted primary (e.g. gemini-3.6-flash's
+                # 20/day free cap) automatically shifts to flash-lite.
+                if ("404" in s or "no longer available" in s
+                        or "429" in s or "RESOURCE_EXHAUSTED" in s
+                        or "exceeded your current quota" in s):
+                    print(f"[gen] model {m} unavailable/quota-exhausted, trying next")
+                    continue
+                raise
     except ImportError:
-        # fallback: raw REST if SDK missing
-        import requests
-        r = requests.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={KEY}",
-            json={"contents":[{"parts":[{"text": prompt}]}],"generationConfig":{"temperature":0.7,"maxOutputTokens":8192}},
-            timeout=180)
-        r.raise_for_status()
-        return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+        pass
+    # fallback: raw REST if SDK missing (juga pakai list model)
+    import requests
+    for m in MODELS:
+        try:
+            r = requests.post(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={KEY}",
+                json={"contents":[{"parts":[{"text": prompt}]}],"generationConfig":{"temperature":0.7,"maxOutputTokens":8192}},
+                timeout=180)
+            if r.status_code in (404, 429):
+                print(f"[gen] REST model {m} {r.status_code}, next")
+                continue
+            r.raise_for_status()
+            return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+        except Exception as e:
+            last_err = e
+            if "404" in str(e):
+                continue
+            raise
+    raise RuntimeError(f"All Gemini models failed: {last_err}")
 
 
 def _render(title, author, body):
