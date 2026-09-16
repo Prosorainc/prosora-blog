@@ -13,7 +13,7 @@ import sys, time, subprocess
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
-QUEUE = BASE / "books_queue.txt"
+QUEUE = BASE / "scripts" / "books_queue.txt"
 GEN = BASE / "scripts" / "gen_pdf.py"
 ADD = BASE / "scripts" / "add_book.py"
 
