@@ -905,6 +905,17 @@ def _author_for(title):
         "Code_Complete": "Steve McConnell",
         "The_Software_Architects_Handbook": "Joseph Ingeno",
         "Refactoring": "Martin Fowler",
+        "Deep_Work": "Cal Newport",
+        "Essentialism": "Greg McKeown",
+        "The_ONE_Thing": "Gary Keller",
+        "Mindset": "Carol Dweck",
+        "Grit": "Angela Duckworth",
+        "Getting_Things_Done": "David Allen",
+        "Digital_Minimalism": "Cal Newport",
+        "The_Obstacle_Is_the_Way": "Ryan Holiday",
+        "Ego_Is_the_Enemy": "Ryan Holiday",
+        "Stillness_Is_the_Key": "Ryan Holiday",
+        "The_Gifts_of_Imperfection": "Brené Brown",
 }
     return m.get(title, "")
 
@@ -1760,6 +1771,17 @@ def _remembrance(title, author):
         "Code_Complete": "Steve McConnell",
         "The_Software_Architects_Handbook": "Joseph Ingeno",
         "Refactoring": "Martin Fowler",
+        "Deep_Work": "Cal Newport",
+        "Essentialism": "Greg McKeown",
+        "The_ONE_Thing": "Gary Keller",
+        "Mindset": "Carol Dweck",
+        "Grit": "Angela Duckworth",
+        "Getting_Things_Done": "David Allen",
+        "Digital_Minimalism": "Cal Newport",
+        "The_Obstacle_Is_the_Way": "Ryan Holiday",
+        "Ego_Is_the_Enemy": "Ryan Holiday",
+        "Stillness_Is_the_Key": "Ryan Holiday",
+        "The_Gifts_of_Imperfection": "Brené Brown",
 }
     fn = title.replace(" ", "_")
     if fn not in m:
