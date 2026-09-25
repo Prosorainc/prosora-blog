@@ -75,7 +75,20 @@ def _draft(title, author):
                     model=m,
                     contents="You write deep, original book summaries that reveal real meaning, not surface tips.\n\n" + prompt,
                     config={"temperature": 0.7, "max_output_tokens": 8192})
-                return resp.text.strip()
+                # Try to extract text from the response.
+                # Newer SDK versions may expose it via candidates[0].content.parts[0].text;
+                # older versions still use resp.text.
+                if resp.text:
+                    return resp.text.strip()
+                if resp.candidates and resp.candidates[0]:
+                    content = resp.candidates[0].content
+                    if content and content.parts and content.parts[0].text:
+                        return content.parts[0].text.strip()
+                # If all else fails, raise a clear error.
+                raise RuntimeError(
+                    f"Could not extract text from response. "
+                    f"resp.text={resp.text}, resp.candidates={resp.candidates}"
+                )
             except Exception as e:
                 last_err = e
                 s = str(e)
