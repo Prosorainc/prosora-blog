@@ -1,6 +1,3 @@
-Ikigai | Hector Garcia
-The Upside of Irrationality | Dan Ariely
-The Art of Strategy | Avinash Dixit
-The Art of Game Design | Jesse Schell
-Blink | Malcolm Gladwell
-Predictably Irrational | Dan Ariely
+Thinking, Fast and Slow | Daniel Kahneman
+The Intelligent Investor | Benjamin Graham
+Think and Grow Rich | Napoleon Hill
