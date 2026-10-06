@@ -1,5 +1,3 @@
-Atomic Habits | James Clear
-The Psychology of Money | Morgan Housel
 The Power of Habit | Charles Duhigg
 Educated | Tara Westover
 The Subtle Art of Not Giving a F*ck | Mark Manson
@@ -10,3 +8,25 @@ Essentialism | Greg McKeown
 The Alchemist | Paulo Coelho
 How to Win Friends and Influence People | Dale Carnegie
 Rich Dad Poor Dad | Robert Kiyosaki
+Deep Work | Cal Newport
+Grit | Angela Duckworth
+Thinking, Fast and Slow | Daniel Kahneman
+The One Thing | Gary Keller
+Sapiens | Yuval Noah Harari
+Daring Greatly | Brené Brown
+The 5 AM Club | Robin Sharma
+Make Your Bed | William H. McRaven
+The Miracle Morning | Hal Elrod
+Shoe Dog | Phil Knight
+Principles | Ray Dalio
+The 48 Laws of Power | Robert Greene
+Meditations | Marcus Aurelius
+The Lean Startup | Eric Ries
+Zero to One | Peter Thiel
+Start with Why | Simon Sinek
+Drive | Daniel Pink
+The Power of Now | Eckhart Tolle
+The Innovator's Dilemma | Clayton Christensen
+Outliers | Malcolm Gladwell
+Atomic Habits | James Clear
+The Psychology of Money | Morgan Housel
