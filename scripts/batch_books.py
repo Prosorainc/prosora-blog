@@ -46,25 +46,41 @@ def main():
     for i, line in enumerate(todo):
         title, author = [x.strip() for x in line.split("|", 1)]
         print(f"\n=== [{i+1}/{len(todo)}] {title} ===")
-        try:
+        # retry up to 3x on transient Gemini 503/429
+        last_err = ""
+        gen_ok = False
+        for attempt in range(3):
             r = subprocess.run([PY, str(GEN), title, author],
                                capture_output=True, text=True, timeout=240)
             pdf_name = title.replace(" ", "_").replace("/", "_").replace("\\", "_")
-            if r.returncode != 0 or not (BASE / "pdf" / f"{pdf_name}.pdf").exists():
-                print("[batch] gen FAILED, keep in queue:", r.stderr[-200:])
+            ok = (r.returncode == 0 and (BASE / "pdf" / f"{pdf_name}.pdf").exists())
+            if ok:
+                gen_ok = True
+                break
+            last_err = (r.stderr or r.stdout)[-300:]
+            if "503" in last_err or "429" in last_err or "UNAVAILABLE" in last_err or "quota" in last_err.lower():
+                print(f"[batch] retry {attempt+1}/3 (transient Gemini error): {last_err[:120]}")
+                time.sleep(5 * (attempt + 1))  # backoff
+            else:
+                print("[batch] gen FAILED, keep in queue:", last_err)
                 remaining.append(line)
-                continue
-            # inject into site
-            subprocess.run([PY, str(ADD), title, author],
-                           capture_output=True, text=True, timeout=60)
-            done.append(line)
-            print(f"[batch] OK: {title}")
-        except Exception as e:
-            print("[batch] error:", e)
-            remaining.append(line)
+                break
+
+        # only inject into site if gen succeeded
+        if gen_ok:
+            try:
+                subprocess.run([PY, str(ADD), title, author],
+                               capture_output=True, text=True, timeout=60)
+                done.append(line)
+                print(f"[batch] OK: {title}")
+            except Exception as e:
+                print("[batch] error:", e)
+                remaining.append(line)
+
         # throttle (skip delay after last item)
         if i < len(todo) - 1:
             time.sleep(CALL_DELAY)
+
     # rewrite queue with remaining
     if remaining:
         QUEUE.write_text("\n".join(remaining) + "\n")
