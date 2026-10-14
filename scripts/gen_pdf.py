@@ -84,6 +84,12 @@ def _draft(title, author):
                     content = resp.candidates[0].content
                     if content and content.parts and content.parts[0].text:
                         return content.parts[0].text.strip()
+                    # Model blocked the request (copyright recitation) -> treat as
+                    # failure so we fall through to the next model / OpenRouter.
+                    fr = resp.candidates[0].finish_reason
+                    if fr == "RECITATION":
+                        print(f"[gen] {m} blocked (RECITATION), trying next")
+                        continue
                 # If all else fails, raise a clear error.
                 raise RuntimeError(
                     f"Could not extract text from response. "
@@ -97,8 +103,9 @@ def _draft(title, author):
                 # 20/day free cap) automatically shifts to flash-lite.
                 if ("404" in s or "no longer available" in s
                         or "429" in s or "RESOURCE_EXHAUSTED" in s
-                        or "exceeded your current quota" in s):
-                    print(f"[gen] model {m} unavailable/quota-exhausted, trying next")
+                        or "exceeded your current quota" in s
+                        or "503" in s or "Service Unavailable" in s or "unavailable" in s.lower()):
+                    print(f"[gen] model {m} unavailable/quota-exhausted/503, trying next")
                     continue
                 raise
     except ImportError:
@@ -121,7 +128,52 @@ def _draft(title, author):
             if "404" in str(e):
                 continue
             raise
-    raise RuntimeError(f"All Gemini models failed: {last_err}")
+
+    # Fallback to OpenRouter (free tier) when all Gemini models are exhausted
+    OR_KEY_PATH = BASE / "openrouter_key.txt"
+    if not OR_KEY_PATH.exists():
+        # Try prosora's key
+        OR_KEY_PATH = Path("/home/ubuntu/prosora/openrouter_key.txt")
+    if OR_KEY_PATH.exists():
+        OR_KEY = OR_KEY_PATH.read_text().strip()
+        OR_MODELS = [
+            "google/gemma-3-27b-it:free",  # Gemma 3 27B - free
+            "meta-llama/llama-3.1-8b-instruct:free",  # Llama 3.1 8B - free
+            "google/gemini-flash-1.5-8b",  # Gemini 1.5 Flash 8B - free
+        ]
+        print(f"[gen] Trying OpenRouter fallback models: {OR_MODELS}")
+        for m in OR_MODELS:
+            try:
+                r = requests.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {OR_KEY}",
+                             "HTTP-Referer": "https://prosora.ai",
+                             "X-Title": "Prosora Affiliate Blog"},
+                    json={"model": m,
+                          "messages": [
+                              {"role": "system", "content": "You write deep, original book summaries that reveal real meaning, not surface tips."},
+                              {"role": "user", "content": prompt}
+                          ],
+                          "temperature": 0.7,
+                          "max_tokens": 8192},
+                    timeout=180)
+                if r.status_code == 429:
+                    print(f"[gen] OpenRouter model {m} rate limited, trying next")
+                    continue
+                r.raise_for_status()
+                data = r.json()
+                if "choices" in data and data["choices"]:
+                    return data["choices"][0]["message"]["content"].strip()
+                print(f"[gen] OpenRouter model {m} returned no choices: {data}")
+            except Exception as e:
+                last_err = e
+                s = str(e)
+                if "429" in s or "rate" in s.lower() or "quota" in s.lower():
+                    print(f"[gen] OpenRouter model {m} quota exhausted, trying next")
+                    continue
+                print(f"[gen] OpenRouter model {m} error: {e}")
+                continue
+    raise RuntimeError(f"All models failed (Gemini + OpenRouter): {last_err}")
 
 
 def _render(title, author, body):
