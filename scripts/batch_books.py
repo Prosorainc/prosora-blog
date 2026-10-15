@@ -51,7 +51,7 @@ def main():
         gen_ok = False
         for attempt in range(3):
             r = subprocess.run([PY, str(GEN), title, author],
-                               capture_output=True, text=True, timeout=240)
+                               capture_output=True, text=True, timeout=600)
             pdf_name = title.replace(" ", "_").replace("/", "_").replace("\\", "_")
             ok = (r.returncode == 0 and (BASE / "pdf" / f"{pdf_name}.pdf").exists())
             if ok:
